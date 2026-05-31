@@ -1,32 +1,103 @@
+<?php
+include 'koneksi.php';
+
+$error = "";
+
+if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($koneksi, $_POST['username']);
+    $password = mysqli_real_escape_string($koneksi, $_POST['password']);
+
+    // Cek ke database HeidiSQL
+    $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $result = mysqli_query($koneksi, $query);
+
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        
+        // Simpan data login ke session browser
+        $_SESSION['login'] = true;
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['nama'] = $row['nama_lengkap'];
+        $_SESSION['role'] = $row['role'];
+
+        // Alihkan halaman sesuai role masing-masing
+        if ($row['role'] == 'admin') {
+            header("Location: dashboard_admin.php");
+        } else {
+            header("Location: dashboard.php");
+        }
+        exit;
+    } else {
+        $error = "Username atau password salah!";
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rona Nuswa - Konfirmasi Booking Layanan</title>
+    <title>Rona Nuswa - Login Akun Pelanggan</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* Penyelarasan Tema Rona Nuswa */
+      /* Penyelarasan Tema Warna Rona Nuswa - Gold & Dark Chocolate */
       .menu ul li a {
+        color: #3D2314 !important; /* Dark Chocolate */
         font-weight: bold;
+        position: relative;
+      }
+      .menu ul li a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: 0;
+        left: 0;
+        background-color: #D4AF37 !important; /* Gold */
+        transition: width 0.3s ease-in-out;
+        border-radius: 5px;
+      }
+      .menu ul li a:hover::after {
+        width: 100%;
       }
       .badge {
-        background-color: #ffc0cb !important;
-        color: #800000 !important;
+        background-color: #D4AF37 !important; /* Gold */
+        color: #3D2314 !important; /* Dark Chocolate */
         font-weight: bold;
       }
+      .shopping-cart:hover {
+        color: #D4AF37 !important;
+        transform: scale(1.1);
+        transition: 0.3s ease-in-out;
+      }
       .btn-primary {
-        background-color: #800000 !important;
-        border-color: #800000 !important;
-        color: #fff !important;
+        background-color: #D4AF37 !important; /* Gold */
+        border-color: #3D2314 !important;
+        color: #3D2314 !important; /* Dark Chocolate */
+        font-weight: bold;
       }
       .btn-primary:hover {
-        background-color: #ffc0cb !important;
-        color: #800000 !important;
+        background-color: #3D2314 !important; /* Dark Chocolate */
+        color: #D4AF37 !important; /* Gold */
+      }
+      .login .form fieldset {
+        border: 1px solid #D4AF37 !important;
+        border-radius: 8px;
+      }
+      .login .form legend {
+        color: #3D2314;
+        font-weight: bold;
+      }
+      .login .form input[type="text"], 
+      .login .form input[type="password"] {
+        border: 1px solid #D4AF37;
+        border-radius: 4px;
+        padding: 10px;
       }
     </style>
   </head>
@@ -69,7 +140,7 @@
                 >
               </li>
               <li>
-                <a class="hvr-underline-from-center" href="login.html">Login</a>
+                <a class="hvr-underline-from-center" href="login.php" style="color: #D4AF37 !important;">Login</a>
               </li>
               <li>
                 <a id="shopping-cart" class="shopping-cart">
@@ -88,7 +159,7 @@
                       <th>Action</th>
                     </tr>
                     <tr>
-                      <td><img src="img/food/p1.jpg" alt="Layanan" /></td>
+                      <td><img src="img/layanan/wedding_makeup.jpg" alt="Layanan" /></td>
                       <td>Paket Wedding Silver</td>
                       <td>Rp 3.500.000</td>
                       <td>1</td>
@@ -96,7 +167,7 @@
                       <td><a href="#" class="btn-delete">&times;</a></td>
                     </tr>
                     <tr>
-                      <td><img src="img/food/s1.jpg" alt="Layanan" /></td>
+                      <td><img src="img/layanan/live_music.jpg" alt="Layanan" /></td>
                       <td>Band Akustik (Wedding)</td>
                       <td>Rp 3.000.000</td>
                       <td>1</td>
@@ -104,7 +175,7 @@
                       <td><a href="#" class="btn-delete">&times;</a></td>
                     </tr>
                     <tr>
-                      <td><img src="img/food/b1.jpg" alt="Layanan" /></td>
+                      <td><img src="img/layanan/kostum.jpg" alt="Layanan" /></td>
                       <td>Sewa Kostum Jaipong Merah</td>
                       <td>Rp 100.000</td>
                       <td>1</td>
@@ -125,90 +196,40 @@
         </div>
       </nav>
     </header>
-    <section class="order">
+
+    <section class="login">
       <div class="container">
-        <h2 class="text-center">
-          Isi formulir ini untuk konfirmasi pesanan layanan Anda.
-        </h2>
-        <table class="tbl-full" border="0">
-          <tr>
-            <th>S.N.</th>
-            <th>Layanan</th>
-            <th>Nama Layanan / Paket</th>
-            <th>Tarif</th>
-            <th>Qty</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td><img src="img/food/p1.jpg" alt="Layanan" /></td>
-            <td>
-              Paket Wedding Silver<br /><small style="color: #e67e22"
-                >Opsi: Indoor Hall</small
-              >
-            </td>
-            <td>Rp 3.500.000</td>
-            <td>1</td>
-            <td>Rp 3.500.000</td>
-            <td><a href="#" class="btn-delete">&times;</a></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td><img src="img/food/s1.jpg" alt="Layanan" /></td>
-            <td>
-              Band Akustik (Wedding)<br /><small style="color: #e67e22"
-                >Opsi: Full Band</small
-              >
-            </td>
-            <td>Rp 3.000.000</td>
-            <td>1</td>
-            <td>Rp 3.000.000</td>
-            <td><a href="#" class="btn-delete">&times;</a></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><img src="img/food/b1.jpg" alt="Layanan" /></td>
-            <td>Sewa Kostum Jaipong Merah Standar</td>
-            <td>Rp 100.000</td>
-            <td>1</td>
-            <td>Rp 100.000</td>
-            <td><a href="#" class="btn-delete">&times;</a></td>
-          </tr>
-          <tr>
-            <th colspan="5">Total Keseluruhan</th>
-            <th>Rp 6.600.000</th>
-            <th></th>
-          </tr>
-        </table>
-        <form action="" class="form">
+        <h2 class="text-center">Login Akun</h2>
+        <div class="heading-border"></div>
+
+        <form action="" method="POST" class="form">
           <fieldset>
-            <legend>Detail Lokasi & Data Pemesan</legend>
-            <p class="label">Nama Lengkap</p>
+            <legend>Masuk ke Rona Nuswa</legend>
+            
+            <?php if($error): ?>
+                <p style="color: #cc0000; font-weight: bold; margin-bottom: 15px; text-align: center;"><?= $error; ?></p>
+            <?php endif; ?>
+
+            <p class="label">Username Pelanggan</p>
             <input
               type="text"
-              placeholder="Masukkan nama lengkap Anda..."
+              name="username"
+              placeholder="Masukkan username Anda..."
               required
             />
-            <p class="label">Nomor Telepon / WhatsApp</p>
-            <input type="contact" placeholder="Contoh: 081234567xxx" required />
-            <p class="label">Email Pemesan</p>
+            <p class="label">Password</p>
             <input
-              type="email"
-              placeholder="Masukkan email aktif Anda..."
+              type="password"
+              name="password"
+              placeholder="Masukkan kata sandi Anda..."
               required
             />
-            <p class="label">Alamat Lengkap Acara / Pengiriman Kostum</p>
-            <input
-              type="text"
-              placeholder="Masukkan alamat studio (In-Studio) atau lokasi gedung acara (On-Location)..."
-              required
-            />
-            <input type="submit" value="Confirm Booking" class="btn-primary" />
+            <input type="submit" name="login" value="Login" class="btn-primary" />
           </fieldset>
         </form>
       </div>
     </section>
+
     <section class="footer">
       <div class="container">
         <div class="grid-3">
@@ -230,7 +251,7 @@
               <a href="foods.html">Layanan Jasa</a>
               <a href="order.html">Booking</a>
               <a href="contact.html">Contact</a>
-              <a href="login.html">Login</a>
+              <a href="login.php">Login</a>
             </div>
           </div>
           <div class="social-links">
@@ -274,6 +295,7 @@
         </div>
       </div>
     </section>
+
     <section class="copyright">
       <div class="container text-center">
         <p>

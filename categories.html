@@ -4,28 +4,293 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Food Delivery Website</title>
-    <!-- Favicon -->
+    <title>Seni Tari Jaipongan, Makeup & Wedding Entertainment</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-    <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css" />
-    <!-- Hover CSS -->
     <link rel="stylesheet" href="css/hover-min.css" />
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* ==========================================================================
+         1. NAVBAR & DROPDOWN REVISI
+         ========================================================================== */
+      .menu ul li a {
+        color: #222222 !important; /* Warna dasar hitam elegan */
+        position: relative;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: color 0.3s ease;
+      }
+
+      .menu ul li a:hover,
+      .navbar-menu ul li a:hover {
+        color: #bc942a !important; /* Emas saat di-hover */
+      }
+
+      .menu ul li a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #d4af37;
+        transition: width 0.3s ease-in-out;
+        border-radius: 5px;
+      }
+      .menu ul li a:hover::after {
+        width: 100%;
+      }
+
+      /* Dropdown Menu (Mengganti Navy jadi Dark Choco) */
+      .navbar-menu ul li ul,
+      .menu ul li div.dropdown,
+      .navbar-menu .dropdown-menu {
+        background-color: #2b1a0a !important;
+        border-top: 3px solid #bc942a !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .navbar-menu ul li ul li a,
+      .menu ul li div.dropdown a {
+        color: #ffffff !important;
+        background: transparent !important;
+        text-align: left !important;
+        padding: 10px 20px !important;
+        display: block !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .navbar-menu ul li ul li a:hover,
+      .menu ul li div.dropdown a:hover {
+        background-color: #3d250e !important;
+        color: #ffebad !important;
+        padding-left: 25px !important;
+      }
+
+      /* Cart & Badge */
+      .badge {
+        background-color: #d4af37 !important;
+        color: #ffffff !important;
+        font-weight: bold;
+      }
+
+      .shopping-cart {
+        color: #222222 !important;
+      }
+
+      .shopping-cart:hover {
+        color: #bc942a !important;
+      }
+
+      /* ==========================================================================
+         2. SEARCH BAR & TOMBOL
+         ========================================================================== */
+      .search-form input[type="search"],
+      .search-bar input {
+        border: 2px solid #bc942a !important;
+      }
+
+      .search-form .btn-primary,
+      .search-bar button,
+      input[value="Cari Layanan"],
+      .btn-primary {
+        background-color: #bc942a !important; /* Tombol jadi Emas */
+        color: #2b1a0a !important;
+        font-weight: bold !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .search-form .btn-primary:hover,
+      .search-bar button:hover,
+      .btn-primary:hover {
+        background-color: #2b1a0a !important;
+        color: #ffebad !important;
+      }
+
+      /* ==========================================================================
+         3. KATEGORI GALERI & ULASAN (DARK CHOCO)
+         ========================================================================== */
+      .categories {
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(253, 250, 242, 0.45),
+            rgba(245, 236, 215, 0.6)
+          ),
+          url("img/bg.jpg") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        padding: 60px 0 90px 0 !important;
+      }
+
+      .categories .grid-3 {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 30px !important;
+        padding: 20px 0 !important;
+      }
+
+      @media (max-width: 992px) {
+        .categories .grid-3 {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .categories .grid-3 {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      .categories .float-container {
+        position: relative !important;
+        overflow: hidden !important;
+        border-radius: 16px !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        background-color: #2b1a0a !important;
+        height: 260px !important;
+        float: none !important;
+        width: 100% !important;
+        margin-bottom: 0 !important;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+      }
+
+      .categories .float-container img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        transition: transform 0.6s ease !important;
+      }
+
+      /* Gradasi kotak galeri dari Navy ganti ke Dark Choco */
+      .categories .float-container::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(
+          to bottom,
+          rgba(43, 26, 10, 0.15),
+          rgba(43, 26, 10, 0.85)
+        ) !important;
+        z-index: 1 !important;
+        transition: all 0.4s ease !important;
+      }
+
+      .categories a:hover .float-container img {
+        transform: scale(1.08) !important;
+      }
+      .categories a:hover .float-container::before {
+        background: linear-gradient(
+          to bottom,
+          rgba(188, 148, 42, 0.2),
+          rgba(43, 26, 10, 0.95)
+        ) !important;
+      }
+
+      .categories .float-text {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        background-color: transparent !important;
+        padding: 25px 15px !important;
+        margin: 0 !important;
+        z-index: 2 !important;
+        font-family: "Playfair Display", Georgia, serif !important;
+        font-size: 1.2rem !important;
+        font-weight: bold !important;
+        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8) !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+      }
+
+      .categories a:hover .float-text {
+        color: #ffebad !important;
+      }
+
+      /* Ulasan Box Bintang Emas */
+      .client-testimonial .fa-star,
+      .review-box .stars,
+      .ulasan-pelangan i {
+        color: #d4af37 !important;
+      }
+
+      /* ==========================================================================
+         4. AREA FOOTER & COPYRIGHT (REVISI NAVY TO DARK CHOCO)
+         ========================================================================== */
+      .footer {
+        background-color: #2b1a0a !important; /* Ganti Navy ke Dark Choco */
+        color: #f5ecd7 !important;
+        border-top: 4px solid #bc942a !important;
+        padding: 60px 0 !important;
+      }
+
+      .footer h3 {
+        color: #ffebad !important;
+        font-family: "Playfair Display", serif !important;
+      }
+
+      .footer .site-links a,
+      .footer a {
+        color: #f5ecd7 !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer .site-links a:hover,
+      .footer a:hover {
+        color: #bc942a !important;
+      }
+
+      .copyright {
+        background-color: #1c1005 !important; /* Cokelat tua gelap untuk bawah sendiri */
+        color: #a89f8d !important;
+        border-top: 1px solid rgba(188, 148, 42, 0.2) !important;
+        padding: 20px 0 !important;
+      }
+
+      .copyright a {
+        color: #bc942a !important; /* Ganti Maroon ke Emas Premium */
+        font-weight: bold !important;
+        text-decoration: none !important;
+      }
+
+      .copyright a:hover {
+        color: #ffebad !important;
+      }
+
+      #back-to-top {
+        background-color: #bc942a !important;
+        color: #2b1a0a !important;
+      }
+      #back-to-top:hover {
+        background-color: #2b1a0a !important;
+        color: #ffebad !important;
+      }
+
+      /* Checkbox Styling */
+      .cart-checkbox {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #bc942a;
+      }
+    </style>
   </head>
   <body>
-    <!-- Navigation Section Start -->
     <header class="navbar">
       <nav id="site-top-nav" class="navbar-menu navbar-fixed-top">
         <div class="container">
-          <!-- logo -->
           <div class="logo">
             <a href="index.html" title="Logo">
               <img src="img/logo.png" alt="Logo" class="img-responsive" />
             </a>
           </div>
-          <!-- Main Menu -->
           <div class="menu text-right">
             <ul>
               <li>
@@ -37,11 +302,13 @@
                 >
               </li>
               <li>
-                <a class="hvr-underline-from-center" href="order.html">Order</a>
+                <a class="hvr-underline-from-center" href="order.html"
+                  >Layanan Jasa</a
+                >
               </li>
               <li>
                 <a class="hvr-underline-from-center" href="contact.html"
-                  >Contact</a
+                  >Booking</a
                 >
               </li>
               <li>
@@ -50,50 +317,80 @@
               <li>
                 <a id="shopping-cart" class="shopping-cart">
                   <i class="fa fa-cart-arrow-down"></i>
-                  <span class="badge">4</span>
+                  <span class="badge" id="cart-badge">3</span>
                 </a>
                 <div id="cart-content" class="cart-content">
                   <h3 class="text-center">Shopping Cart</h3>
                   <table class="cart-table" border="0">
                     <tr>
-                      <th>Food</th>
-                      <th>Name</th>
-                      <th>Price</th>
+                      <th>Pilih</th>
+                      <th>Layanan</th>
+                      <th>Nama Kategori</th>
+                      <th>Harga</th>
                       <th>Qty</th>
                       <th>Total</th>
                       <th>Action</th>
                     </tr>
-                    <tr>
-                      <td><img src="img/food/p1.jpg" alt="Food" /></td>
-                      <td>Pizza</td>
-                      <td>$ 8.00</td>
+                    <tr class="cart-item-row">
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="cart-checkbox item-select"
+                          data-price="1400000"
+                          checked
+                        />
+                      </td>
+                      <td><img src="img/food/tari.jpg" alt="Layanan" /></td>
+                      <td>Jasa Tari Jaipongan</td>
+                      <td>Rp 1.400.000</td>
                       <td>1</td>
-                      <td>$ 8.00</td>
+                      <td>Rp 1.400.000</td>
+                      <td><a href="#" class="btn-delete">&times;</a></td>
+                    </tr>
+                    <tr class="cart-item-row">
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="cart-checkbox item-select"
+                          data-price="100000"
+                          checked
+                        />
+                      </td>
+                      <td><img src="img/food/kebaya.jpg" alt="Layanan" /></td>
+                      <td>Sewa Kostum Kebaya</td>
+                      <td>Rp 100.000</td>
+                      <td>1</td>
+                      <td>Rp 100.000</td>
+                      <td><a href="#" class="btn-delete">&times;</a></td>
+                    </tr>
+                    <tr class="cart-item-row">
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="cart-checkbox item-select"
+                          data-price="150000"
+                          checked
+                        />
+                      </td>
+                      <td><img src="img/food/makeup.jpg" alt="Layanan" /></td>
+                      <td>Makeup Professional</td>
+                      <td>Rp 150.000</td>
+                      <td>1</td>
+                      <td>Rp 150.000</td>
                       <td><a href="#" class="btn-delete">&times;</a></td>
                     </tr>
                     <tr>
-                      <td><img src="img/food/s1.jpg" alt="Food" /></td>
-                      <td>Sandwich</td>
-                      <td>$ 8.00</td>
-                      <td>1</td>
-                      <td>$ 8.00</td>
-                      <td><a href="#" class="btn-delete">&times;</a></td>
-                    </tr>
-                    <tr>
-                      <td><img src="img/food/b1.jpg" alt="Food" /></td>
-                      <td>Burder</td>
-                      <td>$ 8.00</td>
-                      <td>1</td>
-                      <td>$ 8.00</td>
-                      <td><a href="#" class="btn-delete">&times;</a></td>
-                    </tr>
-                    <tr>
-                      <th colspan="4">Total</th>
-                      <th>$24.00$</th>
+                      <th
+                        colspan="5"
+                        style="text-align: left; padding-left: 10px"
+                      >
+                        Total Keseluruhan
+                      </th>
+                      <th id="grand-total-display">Rp 1.650.000</th>
                       <th></th>
                     </tr>
                   </table>
-                  <a href="order.html" class="btn-primary">Confirm Order</a>
+                  <a href="order.html" class="btn-primary">Confirm Booking</a>
                 </div>
               </li>
             </ul>
@@ -101,73 +398,100 @@
         </div>
       </nav>
     </header>
-    <!-- Navigation Section End -->
 
-    <!-- Category Section Start -->
     <section class="categories">
       <div class="container">
-        <h2 class="text-center">Explore Market</h2>
-        <div class="heading-border"></div>
+        <h2
+          class="text-center"
+          style="
+            color: #2b1a0a;
+            font-family: &quot;Playfair Display&quot;, serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+          "
+        >
+          Kategori Layanan Seni & Hiburan
+        </h2>
+        <div
+          class="heading-border"
+          style="
+            background-color: #bc942a;
+            width: 80px;
+            margin: 15px auto 35px auto;
+            height: 3px;
+          "
+        ></div>
 
         <div class="grid-3">
           <a href="category-foods.html">
             <div class="float-container">
-              <img src="img/category/pizza.jpg" class="img-responsive" alt="" />
-              <h3 class="float-text text-white">Pizza</h3>
+              <img
+                src="img/food/tari.jpg"
+                class="img-responsive"
+                alt="Jasa Tari"
+              />
+              <h3 class="float-text text-white">Jasa Tari & Hiburan</h3>
             </div>
           </a>
+
           <a href="category-foods.html">
             <div class="float-container">
               <img
-                src="img/category/sandwich.jpg"
+                src="img/food/kebaya.jpg"
                 class="img-responsive"
-                alt=""
+                alt="Sewa Kostum"
               />
-              <h3 class="float-text text-white">Sandwich</h3>
+              <h3 class="float-text text-white">Sewa Kebaya & Kostum</h3>
             </div>
           </a>
+
           <a href="category-foods.html">
             <div class="float-container">
               <img
-                src="img/category/burger.jpg"
+                src="img/food/makeup.jpg"
                 class="img-responsive"
-                alt=""
+                alt="Makeup Artist"
               />
-              <h3 class="float-text text-white">Burger</h3>
+              <h3 class="float-text text-white">Makeup Artist (MUA)</h3>
             </div>
           </a>
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img src="img/category/pizza.jpg" class="img-responsive" alt="" />
-              <h3 class="float-text text-white">Bahan Pokok & Bumbu Dapur</h3>
-            </div>
-          </a>
+
           <a href="category-foods.html">
             <div class="float-container">
               <img
-                src="img/category/sandwich.jpg"
+                src="img/food/dekor.jpg"
                 class="img-responsive"
-                alt=""
+                alt="Paket Pernikahan"
               />
-              <h3 class="float-text text-white">Pulsa & Setor Tarik Tunai</h3>
+              <h3 class="float-text text-white">Paket Pernikahan (Wedding)</h3>
             </div>
           </a>
+
           <a href="category-foods.html">
             <div class="float-container">
               <img
-                src="img/category/burger.jpg"
+                src="img/food/sanggar.jpg"
                 class="img-responsive"
-                alt=""
+                alt="Sanggar Seni"
               />
-              <h3 class="float-text text-white">Peralatan dan Medis</h3>
+              <h3 class="float-text text-white">Pelatihan Sanggar Seni</h3>
+            </div>
+          </a>
+
+          <a href="category-foods.html">
+            <div class="float-container">
+              <img
+                src="img/food/kostum.jpg"
+                class="img-responsive"
+                alt="Kostum Tradisional"
+              />
+              <h3 class="float-text text-white">Sewa Kostum Tradisional</h3>
             </div>
           </a>
         </div>
       </div>
     </section>
-    <!-- Category Section End -->
 
-    <!-- Footer Section Start -->
     <section class="footer">
       <div class="container">
         <div class="grid-3">
@@ -175,19 +499,19 @@
             <h3>About Us</h3>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-              officia, temporibus expedita dicta eligendi harum architecto
-              fugiat sint, laudantium omnis animi. Voluptas praesentium maiores
-              minima pariatur necessitatibus consequuntur, similique assumenda.
+              Rona Nuswa Entertainment hadir sebagai solusi satu pintu (One-Stop
+              Entertainment) untuk menyukseskan berbagai momentum berharga Anda.
+              Nama "Rona Nuswa" membawa filosofi keindahan pancaran pesona
+              budaya Nusantara.
             </p>
           </div>
-          <div class="texr-center">
+          <div class="text-center">
             <h3>Site Map</h3>
             <br />
             <div class="site-links">
               <a href="categories.html">Categories</a>
-              <a href="order.html">Order</a>
-              <a href="contact.html">Contact</a>
+              <a href="order.html">Layanan Jasa</a>
+              <a href="contact.html">Booking</a>
               <a href="login.html">Login</a>
             </div>
           </div>
@@ -232,9 +556,7 @@
         </div>
       </div>
     </section>
-    <!-- Footer Section End -->
 
-    <!-- Copyright Section start -->
     <section class="copyright">
       <div class="container text-center">
         <p>All rights reserved. Design By <a href="#">Resa Tiara Nura</a></p>
@@ -243,13 +565,47 @@
         <i class="fa fa-angle-double-up"></i>
       </a>
     </section>
-    <!-- Copyright Section End -->
 
-    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <!-- Jquery UI -->
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <!-- Custom JS -->
     <script src="js/custom.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".item-select");
+        const grandTotalDisplay = document.getElementById(
+          "grand-total-display",
+        );
+        const cartBadge = document.getElementById("cart-badge");
+
+        function updateCartComputation() {
+          let grandTotal = 0;
+          let checkedCount = 0;
+
+          checkboxes.forEach(function (box) {
+            if (box.checked) {
+              grandTotal += parseInt(box.getAttribute("data-price"));
+              checkedCount++;
+            }
+          });
+
+          // Update teks total dengan format mata uang rupiah asli
+          grandTotalDisplay.textContent =
+            "Rp " + grandTotal.toLocaleString("id-ID");
+          // Update badge angka merah/emas keranjang sesuai jumlah barang yang dicentang
+          if (cartBadge) {
+            cartBadge.textContent = checkedCount;
+          }
+        }
+
+        // Jalankan kalkulasi secara dinamis setiap kali kotak di-klik/centang
+        checkboxes.forEach(function (box) {
+          box.addEventListener("change", updateCartComputation);
+        });
+
+        // Hitung nominal awal saat page pertama kali dimuat browser
+        updateCartComputation();
+      });
+    </script>
   </body>
 </html>
