@@ -45,20 +45,3 @@ Aplikasi pengelolaan reservasi dan layanan seni dengan katalog jasa/sewa, agenda
 
 ---
 
-## 🚀 Cara Install
-
-> Pastikan database MySQL `ronanuswa` sudah dibuat. Migration akan membuat tabel-tabelnya otomatis.
-
-```bash
-# 1. Setup otomatis (install, .env, key, migrate)
-composer run setup
-
-# 2. Seed data awal (admin + contoh produk + ongkos kirim)
-php artisan migrate:fresh --seed
-
-# 3. Storage link (buat akses gambar produk)
-php artisan storage:link
-
-# 4. Jalankan
-php artisan serve
-```
