@@ -12,6 +12,10 @@
     ],
     "routes": [
         {
+            "src": "/storage/(.*)",
+            "dest": "/storage/app/public/$1"
+        },
+        {
             "src": "/(bootstrap|css|images|img-products|js)/(.*)",
             "dest": "/public/$1/$2"
         },
