@@ -8,6 +8,10 @@
         {
             "src": "public/**",
             "use": "@vercel/static"
+        },
+        {
+            "src": "storage/app/public/**",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
@@ -16,8 +20,12 @@
             "dest": "/storage/app/public/$1"
         },
         {
-            "src": "/(bootstrap|css|images|img-products|js)/(.*)",
+            "src": "/(bootstrap|css|images|img-products|js|favicon\\.ico|favicon\\.png|robots\\.txt)/(.*)",
             "dest": "/public/$1/$2"
+        },
+        {
+            "src": "/(.*\\.css|.*\\.js|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.webp|.*\\.ico|.*\\.woff|.*\\.woff2|.*\\.ttf|.*\\.svg)",
+            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
