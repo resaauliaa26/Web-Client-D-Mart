@@ -18,6 +18,11 @@ if (isset($_ENV['VERCEL'])) {
             mkdir($dir, 0777, true);
         }
     }
+    $_ENV['APP_SERVICES_CACHE'] = '/tmp/services.php';
+    $_ENV['APP_PACKAGES_CACHE'] = '/tmp/packages.php';
+    $_ENV['APP_CONFIG_CACHE'] = '/tmp/config.php';
+    $_ENV['APP_ROUTES_CACHE'] = '/tmp/routes.php';
+    $_ENV['APP_EVENTS_CACHE'] = '/tmp/events.php';
 }
 
 $app = Application::configure(basePath: dirname(__DIR__))
