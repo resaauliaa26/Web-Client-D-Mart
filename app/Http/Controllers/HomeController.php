@@ -16,7 +16,7 @@ class HomeController extends Controller
         $flashSaleProducts = Product::whereNotNull('sale_price')->inRandomOrder()->take(4)->get();
 
         $flashSaleEnd = Setting::where('key', 'flash_sale_ends_at')->value('value');
-        $flashSaleEndsAt = $flashSaleEnd ? strtotime($flashSaleEnd) : now()->endOfDay()->timestamp;
+        $flashSaleEndsAt = $flashSaleEnd && strtotime($flashSaleEnd) > time() ? strtotime($flashSaleEnd) : now()->addHours(5)->timestamp;
 
         return view('home.index', compact('categories', 'featuredProducts', 'newProducts', 'flashSaleProducts', 'flashSaleEndsAt'));
     }
