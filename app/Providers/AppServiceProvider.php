@@ -15,5 +15,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        
+        // Force HTTPS in production (Vercel)
+        if (isset($_ENV['VERCEL'])) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }
